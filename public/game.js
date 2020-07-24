@@ -90,7 +90,6 @@ for (let j = 0; j < 21; j++) {
         tile.y = app.screen.height / 2 - 320 + j * 32
         if (i === 10 && j === 10) {
             tile.tint = 0x12AA12
-            currentTile = tile
         }
         tiles.push(tile)
         app.stage.addChild(tile)
