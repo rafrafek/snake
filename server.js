@@ -126,8 +126,8 @@ function sendUpdate() {
         }
     })
 }
-
-server.listen(8080, () => console.log('Server running on 8080...'))
+const port = process.env.PORT || 3000
+server.listen(port, () => console.log(`Server running on ${port}...`))
 
 let speed = .1
 
