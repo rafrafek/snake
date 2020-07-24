@@ -1,0 +1,29 @@
+{
+  "name": "snake",
+  "version": "1.0.0",
+  "description": "snake",
+  "main": "server.js",
+  "dependencies": {
+    "connect": "^3.7.0",
+    "serve-static": "^1.14.1",
+    "ws": "^7.3.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rafrafek/snake.git"
+  },
+  "keywords": [
+    "snake"
+  ],
+  "author": "rafrafek",
+  "license": "CC-BY-4.0",
+  "bugs": {
+    "url": "https://github.com/rafrafek/snake/issues"
+  },
+  "homepage": "https://github.com/rafrafek/snake#readme"
+}
