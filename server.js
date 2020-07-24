@@ -99,7 +99,7 @@ function setNewDirection(token, direction) {
 
 wss.on('connection', (ws) => {
     ws.on('message', (message) => {
-        parsed = JSON.parse(message)
+        const parsed = JSON.parse(message)
         if (parsed.type === 'move') {
             setNewDirection(parsed.token, parsed.data)
         }
