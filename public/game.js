@@ -1,4 +1,5 @@
-var socket = new WebSocket(`ws://${window.location.host}`)
+var protocol = window.location.protocol === 'https' ? 'wss' : 'ws'
+var socket = new WebSocket(`${protocol}://${window.location.host}`)
 var token = null
 var playerId = null
 var connected = false
