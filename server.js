@@ -150,7 +150,7 @@ function getNewTile(player) {
 }
 
 function removePlayer(player) {
-    newPlayers = players.filter(p => p !== player)
+    const newPlayers = players.filter(p => p !== player)
     players = newPlayers
 }
 
