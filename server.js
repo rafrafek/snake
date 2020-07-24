@@ -1,8 +1,8 @@
+'use strict'
 const connect = require('connect')
 const http = require('http')
 const serveStatic = require('serve-static')
 const WebSocket = require('ws')
-const {stringify} = require('querystring')
 
 const app = connect()
 app.use(serveStatic('./public'))
@@ -119,7 +119,7 @@ function sendUpdate() {
             players: playersData
         }
     }
-    stringifiedData = JSON.stringify(data)
+    const stringifiedData = JSON.stringify(data)
     wss.clients.forEach((client) => {
         if (client.readyState === WebSocket.OPEN) {
             client.send(stringifiedData)
