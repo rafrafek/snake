@@ -56,11 +56,14 @@ socket.addEventListener('close', function () {
 })
 
 const app = new PIXI.Application({width: 720, height: 720, backgroundColor: 0xFFFFFF})
-document.body.appendChild(app.view)
+document.getElementById('holder').appendChild(app.view)
 
 function useKey(e) {
     if (!connected) {
         return
+    }
+    if (typeof e.preventDefault === 'undefined') {
+        e.preventDefault = function(){}
     }
     if (e.key === 'ArrowDown') {
         e.preventDefault()

@@ -3,10 +3,23 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <style>canvas{display:block;margin-left:auto;margin-right:auto;}</style>
+        <style>
+            body {text-align: center;}
+            button, #dummy {display:inline-block; padding: 14px; width: 64px; margin: 4px;}
+            canvas {display: block; margin-left: auto; margin-right: auto;}
+            .inline-block {display:inline-block;}
+        </style>
         <title>Game</title>
     </head>
     <body>
+        <div id="holder"></div>
+        <div class="inline-block">
+            <button onclick="useKey({key: 'ArrowUp'})">&uarr;</button><br>
+            <button onclick="useKey({key: 'ArrowLeft'})">&larr;</button>
+            <div id="dummy"></div>
+            <button onclick="useKey({key: 'ArrowRight'})">&rarr;</button><br>
+            <button onclick="useKey({key: 'ArrowDown'})">&darr;</button>
+        </div>
         <script src="./pixi.js"></script>
         <script src="./game.js"></script>
     </body>
