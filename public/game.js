@@ -55,7 +55,7 @@ socket.addEventListener('close', function () {
     connected = false
 })
 
-const app = new PIXI.Application({width: 720, height: 720, backgroundColor: 0xFFFFFF})
+const app = new PIXI.Application({width: 720, height: 920, backgroundColor: 0xFFFFFF})
 document.getElementById('holder').appendChild(app.view)
 
 function useKey(e) {
@@ -85,14 +85,16 @@ function useKey(e) {
 
 document.addEventListener('keydown', useKey, false)
 
+const gameScreen = {width: 720, height: 720}
+
 var lastTile = 0
 for (let j = 0; j < 21; j++) {
     for (let i = 0; i < 21; i++) {
         const tile = PIXI.Sprite.from('./mapTile.png')
         tile.anchor.set(0.5)
         tile.id = lastTile++
-        tile.x = app.screen.width / 2 - 320 + i * 32
-        tile.y = app.screen.height / 2 - 320 + j * 32
+        tile.x = gameScreen.width / 2 - 320 + i * 32
+        tile.y = gameScreen.height / 2 - 320 + j * 32
         if (i === 10 && j === 10) {
             tile.tint = 0x12AA12
         }
@@ -100,3 +102,41 @@ for (let j = 0; j < 21; j++) {
         app.stage.addChild(tile)
     }
 }
+
+const buttons = [
+    {
+        img: './buttonLeft.png',
+        x: app.screen.width / 2 - 96,
+        y: app.screen.height - 112,
+        fn: () => {useKey({key: 'ArrowLeft'})}
+    },
+    {
+        img: './buttonRight.png',
+        x: app.screen.width / 2 + 96,
+        y: app.screen.height - 112,
+        fn: () => {useKey({key: 'ArrowRight'})}
+    },
+    {
+        img: './buttonUp.png',
+        x: app.screen.width / 2,
+        y: app.screen.height - 176,
+        fn: () => {useKey({key: 'ArrowUp'})}
+    },
+    {
+        img: './buttonDown.png',
+        x: app.screen.width / 2,
+        y: app.screen.height - 48,
+        fn: () => {useKey({key: 'ArrowDown'})}
+    },
+]
+
+buttons.forEach(b => {
+    const button = PIXI.Sprite.from(b.img)
+    button.anchor.set(0.5)
+    button.x = b.x
+    button.y = b.y
+    button.interactive = true
+    button.buttonMode = true
+    button.on('pointerdown', b.fn)
+    app.stage.addChild(button)
+})
