@@ -20,9 +20,12 @@ const colors = [
     {dark: 0xAA1212, light: 0xFF1212}
 ]
 
+var lastTile = 0
 for (let j = 0; j < 21; j++) {
     for (let i = 0; i < 21; i++) {
         const tile = {}
+        tile.id = lastTile++
+        tile.changed = true
         tile.x = screen.width / 2 - 320 + i * 32
         tile.y = screen.height / 2 - 320 + j * 32
         if (i === 10 && j === 10) {
@@ -44,8 +47,7 @@ var players = []
 function generatePlayer(ws) {
     const token = generateToken()
     const player = {}
-    player.id = lastPlayerId
-    lastPlayerId++
+    player.id = lastPlayerId++
     player.token = token
     player.currentTile = tiles.find(t => t.isCenter)
     player.currentDirection = 'down'
@@ -107,24 +109,41 @@ wss.on('connection', (ws) => {
     const player = generatePlayer(ws)
     const token = player.token
     ws.send(JSON.stringify({type: 'token', data: {token: token, id: player.id}}))
+    sendUpdate(true, ws)
 })
 
-function sendUpdate() {
+function sendUpdate(initial=false, ws=null) {
     const playersData = []
     players.forEach(p => {playersData.push({x: p.x, y: p.y, currentDirection: p.currentDirection, id: p.id})})
+    const tilesData = []
+    if (initial) {
+        const tilesTinted = tiles.filter(t => t.tint)
+        tilesTinted.forEach(t => {tilesData.push({id: t.id, tint: t.tint})})
+    }
+    else {
+        const tilesTintedChanged = tiles.filter(t => t.tint && t.changed)
+        tilesTintedChanged.forEach(t => {t.changed = false})
+        tilesTintedChanged.forEach(t => {tilesData.push({id: t.id, tint: t.tint})})
+    }
+    
     const data = {
         type: 'update',
         data: {
-            tiles: tiles,
+            tiles: tilesData,
             players: playersData
         }
     }
     const stringifiedData = JSON.stringify(data)
-    wss.clients.forEach((client) => {
-        if (client.readyState === WebSocket.OPEN) {
-            client.send(stringifiedData)
-        }
-    })
+    if (initial) {
+        ws.send(stringifiedData)
+    }
+    else {
+        wss.clients.forEach((client) => {
+            if (client.readyState === WebSocket.OPEN) {
+                client.send(stringifiedData)
+            }
+        })
+    }
 }
 const port = process.env.PORT || 3000
 server.listen(port, () => console.log(`Server running on ${port}...`))
@@ -186,6 +205,7 @@ function gameLoop() {
                 player.currentDirection = player.newDirection
             }
             player.currentTile.tint = colors[player.id % 2].dark
+            player.currentTile.changed = true
             player.passedCenter = false
             player.directionChangeable = false
         }
@@ -194,6 +214,7 @@ function gameLoop() {
             if (newTile) {
                 player.currentTile = newTile
                 player.currentTile.tint = colors[player.id % 2].light
+                player.currentTile.changed = true
                 player.directionChangeable = true
             }
             else {

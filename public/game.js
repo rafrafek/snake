@@ -18,7 +18,7 @@ socket.addEventListener('message', function (event) {
         for (let i = 0; i < parsed.data.tiles.length; i++) {
             const newTint = parsed.data.tiles[i].tint
             if (newTint) {
-                tiles[i].tint = newTint
+                tiles[parsed.data.tiles[i].id].tint = newTint
             }
         }
         const foundPlayers = []
@@ -85,10 +85,12 @@ function useKey(e) {
 
 document.addEventListener('keydown', useKey, false)
 
+var lastTile = 0
 for (let j = 0; j < 21; j++) {
     for (let i = 0; i < 21; i++) {
         const tile = PIXI.Sprite.from('./mapTile.png')
         tile.anchor.set(0.5)
+        tile.id = lastTile++
         tile.x = app.screen.width / 2 - 320 + i * 32
         tile.y = app.screen.height / 2 - 320 + j * 32
         if (i === 10 && j === 10) {
