@@ -106,26 +106,26 @@ for (let j = 0; j < 21; j++) {
 const buttons = [
     {
         img: './buttonLeft.png',
-        x: app.screen.width / 2 - 96,
-        y: app.screen.height - 112,
+        x: app.screen.width / 2 - 112,
+        y: app.screen.height - 110,
         fn: () => {useKey({key: 'ArrowLeft'})}
     },
     {
         img: './buttonRight.png',
-        x: app.screen.width / 2 + 96,
-        y: app.screen.height - 112,
+        x: app.screen.width / 2 + 112,
+        y: app.screen.height - 110,
         fn: () => {useKey({key: 'ArrowRight'})}
     },
     {
         img: './buttonUp.png',
         x: app.screen.width / 2,
-        y: app.screen.height - 176,
+        y: app.screen.height - 166,
         fn: () => {useKey({key: 'ArrowUp'})}
     },
     {
         img: './buttonDown.png',
         x: app.screen.width / 2,
-        y: app.screen.height - 48,
+        y: app.screen.height - 54,
         fn: () => {useKey({key: 'ArrowDown'})}
     },
 ]
